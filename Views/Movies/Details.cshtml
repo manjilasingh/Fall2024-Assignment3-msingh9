@@ -1,0 +1,102 @@
+﻿@model Fall2024_Assignment3_msingh9.Models.MovieDetailsViewModel
+@using Fall2024_Assignment3_msingh9.Controllers
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="pd">
+<h1>Details</h1>
+
+<div>
+    <h4>Movie</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Movie.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Movie.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Movie.IMDB)
+        </dt>
+        <dd class = "col-sm-10">
+                <a href="@Model.Movie.IMDB" target="_blank">@Html.DisplayFor(model => model.Movie.IMDB)</a>
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Movie.Genre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Movie.Genre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Movie.Year)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Movie.Year)
+        </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Movie.Photo)
+            </dt>
+            <dd class="col-sm-10">
+                <img width="100" height="100" src="@Url.Action("GetMoviePhoto", "Movies", new { id = @Model?.Movie.MovieID })" />
+            </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Movie.MovieID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+    <h5>Actors</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Actors)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Actors)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Movies" asp-route-id="@item.ActorID">Edit</a> |
+                        <a asp-action="Details" asp-controller="Movies" asp-route-id="@item.ActorID">Details</a> |
+                        <a asp-action="Delete" asp-controller="Movies" asp-route-id="@item.ActorID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (ViewData["Reviews"] != null)
+    {
+        var reviews = (List<MoviesController.TweetWithSentiment>)ViewData["Reviews"];
+
+        <div class="mt-4">
+            <h2>AI Generated Movie Reviews</h2>
+            <h3>Overall Sentiment: @Model.Movie.AverageSentiment.ToString("F2")</h3>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Reviews</th>
+                        <th>Sentiment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var review in reviews)
+                    {
+                        <tr>
+                            <td>@review.Tweet</td>
+                            <td>@review.Sentiment.ToString("F2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

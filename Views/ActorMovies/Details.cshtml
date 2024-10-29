@@ -1,0 +1,32 @@
+﻿@model Fall2024_Assignment3_msingh9.Models.ActorMovie
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="pd">
+<h1>Details</h1>
+
+<div>
+    <h4>ActorMovie</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Actor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Actor.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Movie)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Movie.Name)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ActorMovieID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+</div>
