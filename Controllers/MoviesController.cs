@@ -28,7 +28,7 @@ namespace Fall2024_Assignment3_msingh9.Controllers
         {
             _context = context;
             _configuration = configuration;
-            var ApiKey = _configuration["OpenAI:SecretKey"] ?? throw new Exception("OpenAI:SecretKey not found in configuration");
+            var ApiKey = _configuration["AZURE_OPENAI_API_KEY"] ?? throw new Exception("AZURE_OPENAI_API_KEY not found in configuration");
             _apiEndpoint = "https://fall2024-msingh9-openai.openai.azure.com/";
             _aiDeployment = "gpt-35-turbo";
             _apiCredential = new ApiKeyCredential(ApiKey);
@@ -79,7 +79,7 @@ namespace Fall2024_Assignment3_msingh9.Controllers
             }
 
             var movie = await _context.Movie.FindAsync(id);
-            if (movie == null || movie.Photo == null)
+            if (movie == null && movie.Photo == null)
             {
                 return NotFound();
             }
@@ -157,7 +157,7 @@ namespace Fall2024_Assignment3_msingh9.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (photo != null || photo!.Length > 0)
+                if (photo != null && photo!.Length > 0)
                 {
                     using MemoryStream memoryStream = new MemoryStream();
                     photo.CopyTo(memoryStream);

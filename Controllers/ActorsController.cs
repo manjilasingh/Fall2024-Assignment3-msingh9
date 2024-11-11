@@ -25,7 +25,7 @@ namespace Fall2024_Assignment3_msingh9.Controllers
         {
             _context = context;
             _configuration = configuration;
-            var ApiKey = _configuration["OpenAI:SecretKey"] ?? throw new Exception("OpenAI:SecretKey not found in configuration");
+            var ApiKey = _configuration["AZURE_OPENAI_API_KEY"] ?? throw new Exception("AZURE_OPENAI_API_KEY not found in configuration");
             _apiEndpoint = "https://fall2024-msingh9-openai.openai.azure.com/";
             _aiDeployment = "gpt-35-turbo";
             _apiCredential = new ApiKeyCredential(ApiKey);

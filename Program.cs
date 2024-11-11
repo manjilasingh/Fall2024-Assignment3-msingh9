@@ -6,11 +6,8 @@ using System.ClientModel;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-string configConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-var conStrBuilder = new SqlConnectionStringBuilder(configConnectionString);
-conStrBuilder.Password = builder.Configuration["DbPassword"];
-string connectionString = conStrBuilder.ConnectionString;
-
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
